@@ -236,7 +236,8 @@ function! pandoc#formatting#AutoFormat(force) abort "{{{1
             endif
         endif
     elseif &formatoptions !=# 'tn'
-        setlocal formatoptions=tnroq
+	"lidong cha: support multi bytes
+        setlocal formatoptions=mMtnroq
     endif
 endfunction
 
@@ -261,7 +262,8 @@ function! pandoc#formatting#UseHardWraps() abort "{{{1
 
     " t: wrap on &textwidth
     " n: keep inner indent for list items.
-    setlocal formatoptions=tnroq
+    "lidong cha: support multi bytes
+    setlocal formatoptions=mMtnroq
     " will detect numbers, letters, *, +, and - as list headers, according to
     " pandoc syntax.
     " TODO: add support for roman numerals
@@ -276,7 +278,8 @@ function! pandoc#formatting#UseHardWraps() abort "{{{1
     elseif stridx(g:pandoc#formatting#mode, 'A') >= 0
         augroup pandoc_autoformat
         au InsertEnter <buffer> call pandoc#formatting#AutoFormat(1)
-        au InsertLeave <buffer> setlocal formatoptions=tnroq
+        "lidong cha: support multi bytes
+        au InsertLeave <buffer> setlocal formatoptions=mMtnroq
         if g:pandoc#formatting#smart_autoformat_on_cursormoved == 1
             au CursorMovedI <buffer> call pandoc#formatting#AutoFormat(0)
         endif
